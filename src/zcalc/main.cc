@@ -10,11 +10,7 @@ int main(int argc, char** argv)
     Tokenizer tokenizer;
     tokenizer.tokenize(input);
 
-    std::cout << "found " << tokenizer.tokens().size() << " tokens\n";
-
-    for (std::size_t idx = 0; idx < tokenizer.tokens().size(); ++idx) {
-        std::cout << "token " << idx << ": " << tokenizer.tokens()[idx].value() << "\n";
-    }
+    std::cout << tokenizer;
 
     return 0;
 }

@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <iomanip>
 
 // Utility functions
 namespace
@@ -82,4 +83,21 @@ std::size_t Tokenizer::read_number(const std::string& input, std::size_t idx)
     tokens_.push_back(token);
 
     return end_idx;
+}
+
+std::ostream& operator<<(std::ostream& out, const Tokenizer& tokenizer)
+{
+    out << "Total " << tokenizer.tokens_.size() << " tokens\n";
+    for (const auto& token : tokenizer.tokens_) {
+        out << "  " << token.name();
+
+        // Print the value if it is a number
+        if (token.type() == TokenType::NUMBER) {
+            out << " " << std::setprecision(12) << token.value();
+        }
+
+        out << "\n";
+    }
+
+    return out;
 }

@@ -46,7 +46,7 @@ void Token::set_value(double value)
 
 bool operator==(const Token& left, const Token& right)
 {
-    return left.type() == right.type() && left.name() == right.name();
+    return left.type_ == right.type_ && left.name() == right.name();
 }
 
 bool operator!=(const Token& left, const Token& right)

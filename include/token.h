@@ -19,6 +19,9 @@ public:
     static const Token MULTIPLY;
     static const Token DIVIDE;
 
+    friend bool operator==(const Token& left, const Token& right);
+    friend bool operator!=(const Token& left, const Token& right);
+
 public:
     Token(TokenType type, const std::string& symbol);
 
@@ -35,8 +38,5 @@ private:
     const std::string symbol_;
     double value_;
 };
-
-bool operator==(const Token& left, const Token& right);
-bool operator!=(const Token& left, const Token& right);
 
 #endif // TOKEN_H_

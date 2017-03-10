@@ -8,6 +8,9 @@
 
 class Tokenizer {
 public:
+    friend std::ostream& operator<<(std::ostream& out, const Tokenizer& tokenizer);
+
+public:
     Tokenizer() = default;
 
     void tokenize(const std::string& input);
@@ -18,5 +21,6 @@ private:
 
     std::size_t read_number(const std::string& input, std::size_t idx);
 };
+
 
 #endif // TOKENIZER_H_
