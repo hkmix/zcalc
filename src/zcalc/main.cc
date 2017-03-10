@@ -5,7 +5,9 @@
 
 int main(int argc, char** argv)
 {
-    const std::string input{"123.456781 12.44 12 0.15 .189 .0 0"};
+    const std::string input{"123.456781 + 12.44 - 12_000_002.173_001 / 0.15 * .189 .0 0"};
+
+    std::cout << "Tokenizing: " << input << "\n";
 
     Tokenizer tokenizer;
     tokenizer.tokenize(input);

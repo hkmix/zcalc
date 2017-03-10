@@ -31,15 +31,33 @@ void Tokenizer::tokenize(const std::string& input)
     while (idx_valid(input, idx)) {
         bool operated = false;
 
+        // Number, read it and continue;
         if (is_digit(input[idx])) {
             idx = read_number(input, idx);
-            operated = true;
+            continue;
         }
 
-        // Prevent infinite loop on invalid value
+        // Operator type, check for characters
+        for (const auto& token : Token::checkable_tokens()) {
+            const auto len = token.symbol().size();
+            const auto remaining_len = input.size() - idx;
+
+            if (remaining_len < len) {
+                continue;
+            }
+
+            if (input.substr(idx, len) == token.symbol()) {
+                tokens_.push_back(token);
+                idx += len;
+                break;
+            }
+        }
+
+        // Prevent infinite loop on unrecognized values
         if (!operated) {
             ++idx;
         }
+
     }
 }
 
@@ -70,14 +88,14 @@ std::size_t Tokenizer::read_number(const std::string& input, std::size_t idx)
         }
     }
 
-    // Tokenize and finish
+    // Tokenize and finish using std::stod
     std::string num_string{input.substr(idx, end_idx - idx)};
     num_string.erase(std::remove_if(num_string.begin(),
                                     num_string.end(),
                                     [](char c) { return c == '_'; }),
                      num_string.end());
 
-    Token token{TokenType::NUMBER, num_string};
+    Token token{TokenType::NUMBER, num_string, Token::NULL_PRECEDENCE};
 
     token.set_value(std::stod(num_string));
     tokens_.push_back(token);
