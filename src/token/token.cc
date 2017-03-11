@@ -8,6 +8,7 @@ const Token Token::ADD{TokenType::ADD, "+", 10};
 const Token Token::SUBTRACT{TokenType::SUBTRACT, "-", 10};
 const Token Token::MULTIPLY{TokenType::MULTIPLY, "*", 15};
 const Token Token::DIVIDE{TokenType::DIVIDE, "/", 15};
+const Token Token::EXPONENT{TokenType::EXPONENT, "**", 20};
 
 Token::Token(TokenType type, const std::string& symbol, unsigned precedence)
     : type_{type}
@@ -24,6 +25,7 @@ const std::vector<Token>& Token::checkable_tokens()
         Token::SUBTRACT,
         Token::MULTIPLY,
         Token::DIVIDE,
+        Token::EXPONENT,
     };
 
     return tokens;
@@ -47,6 +49,7 @@ const std::string& Token::name() const
         {TokenType::SUBTRACT, "SUBTRACT"},
         {TokenType::MULTIPLY, "MULTIPLY"},
         {TokenType::DIVIDE, "DIVIDE"},
+        {TokenType::EXPONENT, "EXPONENT"},
     };
 
     if (token_names.find(type_) != token_names.end()) {
@@ -59,10 +62,11 @@ const std::string& Token::name() const
 OperatorType Token::operator_type() const
 {
     static std::unordered_map<TokenType, OperatorType> operator_types{
-        {TokenType::ADD, OperatorType::BINARY},
-        {TokenType::SUBTRACT, OperatorType::BINARY},
+        {TokenType::ADD, OperatorType::EITHER},
+        {TokenType::SUBTRACT, OperatorType::EITHER},
         {TokenType::MULTIPLY, OperatorType::BINARY},
         {TokenType::DIVIDE, OperatorType::BINARY},
+        {TokenType::EXPONENT, OperatorType::BINARY},
     };
 
     if (operator_types.find(type_) != operator_types.end()) {

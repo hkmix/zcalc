@@ -29,15 +29,14 @@ void Tokenizer::tokenize(const std::string& input)
     std::size_t idx = 0;
 
     while (idx_valid(input, idx)) {
-        bool operated = false;
-
-        // Number, read it and continue;
+        // Number, read it and continue
         if (is_digit(input[idx])) {
             idx = read_number(input, idx);
             continue;
         }
 
-        // Operator type, check for characters
+        // Operator, check for characters
+        const Token* best_token = nullptr;
         for (const auto& token : Token::checkable_tokens()) {
             const auto len = token.symbol().size();
             const auto remaining_len = input.size() - idx;
@@ -46,18 +45,25 @@ void Tokenizer::tokenize(const std::string& input)
                 continue;
             }
 
-            if (input.substr(idx, len) == token.symbol()) {
-                tokens_.push_back(token);
-                idx += len;
-                break;
+            if (input.substr(idx, len) == token.symbol() &&
+                (best_token == nullptr || best_token->precedence() < token.precedence())) {
+                best_token = &token;
             }
         }
 
-        // Prevent infinite loop on unrecognized values
-        if (!operated) {
-            ++idx;
+        if (best_token != nullptr) {
+            std::cout << "found " << best_token->symbol() << "\n";
         }
 
+        if (best_token != nullptr) {
+            // Symbol was identified, add it
+            tokens_.push_back(*best_token);
+            idx += best_token->symbol().size();
+        }
+        else {
+            // Prevent infinite loop on unrecognized values
+            ++idx;
+        }
     }
 }
 

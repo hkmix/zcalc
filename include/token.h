@@ -10,23 +10,26 @@ enum class TokenType {
     SUBTRACT,
     MULTIPLY,
     DIVIDE,
+    EXPONENT,
 };
 
 enum class OperatorType {
     NONE,
     UNARY,
     BINARY,
+    EITHER,
 };
 
 class Token {
 public:
     static constexpr unsigned NULL_PRECEDENCE = -1;
 
-    static const Token NUMBER;
+    // Operators
     static const Token ADD;
     static const Token SUBTRACT;
     static const Token MULTIPLY;
     static const Token DIVIDE;
+    static const Token EXPONENT;
 
     friend bool operator==(const Token& left, const Token& right);
     friend bool operator!=(const Token& left, const Token& right);
