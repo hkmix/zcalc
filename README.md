@@ -10,6 +10,12 @@ A simple calculator to practice using CMake and parsing/handling input.
 - Exponentiation
 - Parentheses
 
+## Next steps
+
+- Add more functionality (functions, operators)
+- Add ability to input binary/hex/oct
+- Add variables and last evaluation variable
+
 ## Instructions
 
 1. Create subdirectories
@@ -22,7 +28,7 @@ A simple calculator to practice using CMake and parsing/handling input.
         /build $ cmake ..
         /build $ make
 
-1. Execute
+1. Execute (optionally, add `-v` or `--verbose` to show tokenizer and parser output)
 
         /build $ cd ../bin
         /bin $ ./zcalc "some expression here"
