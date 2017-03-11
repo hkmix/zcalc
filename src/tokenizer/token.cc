@@ -11,7 +11,7 @@ const Token Token::ADD{TokenType::ADD, "+", 10, Associativity::LEFT};
 const Token Token::SUBTRACT{TokenType::SUBTRACT, "-", 10, Associativity::LEFT};
 const Token Token::MULTIPLY{TokenType::MULTIPLY, "*", 15, Associativity::LEFT};
 const Token Token::DIVIDE{TokenType::DIVIDE, "/", 15, Associativity::LEFT};
-const Token Token::EXPONENT{TokenType::EXPONENT, "**", 20, Associativity::RIGHT};
+const Token Token::EXPONENT{TokenType::EXPONENT, "^", 20, Associativity::RIGHT};
 
 const Token Token::LEFT_PARENS{TokenType::LEFT_PARENS, "(", Token::NULL_PRECEDENCE};
 const Token Token::RIGHT_PARENS{TokenType::RIGHT_PARENS, ")", Token::NULL_PRECEDENCE};
