@@ -3,6 +3,7 @@
 #include "tokenizer_exception.h"
 
 #include <iomanip>
+#include <limits>
 #include <unordered_map>
 
 const Token Token::ADD{TokenType::ADD, "+", 10};
@@ -111,7 +112,8 @@ std::ostream& operator<<(std::ostream& out, const Token& token)
     out << token.name() << " ";
 
     if (token.type_ == TokenType::NUMBER) {
-        out << std::setprecision(12) << token.value_;
+        // Use maximum possible precision
+        out << std::setprecision(std::numeric_limits<double>::digits10 + 1) << token.value_;
     }
     else {
         out << token.symbol();
