@@ -1,17 +1,25 @@
 #include "parser.h"
 
 #include <iostream>
+#include <sstream>
 #include <string>
 
 int main(int argc, char** argv)
 {
-    const std::string input{"123.45 + 12.44 - 12_000_002.173_001 / 0.15 * .189 - .0 ** 0"};
+    const std::string exec_name = std::string{argv[0]};
+    if (argc < 2) {
+        std::cout << "Usage: " << exec_name << " <expression>\n";
 
-    std::cout << "Parsing: " << input << "\n";
+        return 0;
+    }
 
-    Parser parser{input};
+    std::stringstream ss;
+    for (auto idx = 1; idx < argc; ++idx) {
+        ss << argv[idx] << " ";
+    }
 
-    std::cout << parser;
+    Parser parser{ss.str()};
+    std::cout << parser.evaluate() << "\n";
 
     return 0;
 }

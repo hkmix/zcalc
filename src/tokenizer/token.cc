@@ -32,6 +32,8 @@ const std::vector<Token>& Token::checkable_tokens()
         Token::MULTIPLY,
         Token::DIVIDE,
         Token::EXPONENT,
+        Token::LEFT_PARENS,
+        Token::RIGHT_PARENS,
     };
 
     return tokens;
