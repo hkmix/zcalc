@@ -11,9 +11,7 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const Tokenizer& tokenizer);
 
 public:
-    Tokenizer() = default;
-
-    void tokenize(const std::string& input);
+    explicit Tokenizer(const std::string& input);
     const std::vector<Token>& tokens() const;
 
 private:

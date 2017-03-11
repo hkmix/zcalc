@@ -1,18 +1,17 @@
-#include "tokenizer.h"
+#include "parser.h"
 
 #include <iostream>
 #include <string>
 
 int main(int argc, char** argv)
 {
-    const std::string input{"123.456781 + 12.44 - 12_000_002.173_001 / 0.15 * .189 - .0 ** 0"};
+    const std::string input{"123.45 + 12.44 - 12_000_002.173_001 / 0.15 * .189 - .0 ** 0"};
 
-    std::cout << "Tokenizing: " << input << "\n";
+    std::cout << "Parsing: " << input << "\n";
 
-    Tokenizer tokenizer;
-    tokenizer.tokenize(input);
+    Parser parser{input};
 
-    std::cout << tokenizer;
+    std::cout << parser;
 
     return 0;
 }

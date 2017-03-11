@@ -21,7 +21,7 @@ bool is_digit(char c)
 } // namespace
 
 // Tokenizer
-void Tokenizer::tokenize(const std::string& input)
+Tokenizer::Tokenizer(const std::string& input)
 {
     tokens_.clear();
 
@@ -107,7 +107,7 @@ std::size_t Tokenizer::read_number(const std::string& input, std::size_t idx)
 
 std::ostream& operator<<(std::ostream& out, const Tokenizer& tokenizer)
 {
-    out << "Total " << tokenizer.tokens_.size() << " tokens\n";
+    out << "Tokenizer: total " << tokenizer.tokens_.size() << " tokens\n";
     for (const auto& token : tokenizer.tokens_) {
         out << "  " << token << "\n";
     }

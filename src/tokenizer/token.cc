@@ -6,17 +6,21 @@
 #include <limits>
 #include <unordered_map>
 
-const Token Token::ADD{TokenType::ADD, "+", 10};
-const Token Token::SUBTRACT{TokenType::SUBTRACT, "-", 10};
-const Token Token::MULTIPLY{TokenType::MULTIPLY, "*", 15};
-const Token Token::DIVIDE{TokenType::DIVIDE, "/", 15};
-const Token Token::EXPONENT{TokenType::EXPONENT, "**", 20};
+const Token Token::ADD{TokenType::ADD, "+", 10, Associativity::LEFT};
+const Token Token::SUBTRACT{TokenType::SUBTRACT, "-", 10, Associativity::LEFT};
+const Token Token::MULTIPLY{TokenType::MULTIPLY, "*", 15, Associativity::LEFT};
+const Token Token::DIVIDE{TokenType::DIVIDE, "/", 15, Associativity::LEFT};
+const Token Token::EXPONENT{TokenType::EXPONENT, "**", 20, Associativity::RIGHT};
 
-Token::Token(TokenType type, const std::string& symbol, unsigned precedence)
+const Token Token::LEFT_PARENS{TokenType::LEFT_PARENS, "(", Token::NULL_PRECEDENCE};
+const Token Token::RIGHT_PARENS{TokenType::RIGHT_PARENS, ")", Token::NULL_PRECEDENCE};
+
+Token::Token(TokenType type, const std::string& symbol, unsigned precedence, Associativity associativity)
     : type_{type}
     , symbol_{symbol}
     , value_{0}
     , precedence_{precedence}
+    , associativity_{associativity}
 {
 }
 
@@ -52,6 +56,8 @@ const std::string& Token::name() const
         {TokenType::MULTIPLY, "MULTIPLY"},
         {TokenType::DIVIDE, "DIVIDE"},
         {TokenType::EXPONENT, "EXPONENT"},
+        {TokenType::LEFT_PARENS, "LEFT_PARENS"},
+        {TokenType::RIGHT_PARENS, "RIGHT_PARENS"},
     };
 
     if (token_names.find(type_) != token_names.end()) {
@@ -59,23 +65,6 @@ const std::string& Token::name() const
     }
 
     throw TokenizerException{TokenizerException::UNEXPECTED_TOKEN, 0};
-}
-
-OperatorType Token::operator_type() const
-{
-    static std::unordered_map<TokenType, OperatorType> operator_types{
-        {TokenType::ADD, OperatorType::EITHER},
-        {TokenType::SUBTRACT, OperatorType::EITHER},
-        {TokenType::MULTIPLY, OperatorType::BINARY},
-        {TokenType::DIVIDE, OperatorType::BINARY},
-        {TokenType::EXPONENT, OperatorType::BINARY},
-    };
-
-    if (operator_types.find(type_) != operator_types.end()) {
-        return operator_types[type_];
-    }
-
-    return OperatorType::NONE;
 }
 
 double Token::value() const
@@ -86,6 +75,11 @@ double Token::value() const
 unsigned Token::precedence() const
 {
     return precedence_;
+}
+
+bool Token::is_left_associative() const
+{
+    return associativity_ == Associativity::LEFT;
 }
 
 void Token::set_value(double value)

@@ -9,7 +9,7 @@ public:
     static const std::string INVALID_NUMBER;
 
 public:
-    TokenizerException(const std::string& message, std::size_t column);
+    explicit TokenizerException(const std::string& message, std::size_t column);
 
     const std::string message() const;
     std::size_t column() const;

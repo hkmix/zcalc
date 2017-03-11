@@ -12,13 +12,13 @@ enum class TokenType {
     MULTIPLY,
     DIVIDE,
     EXPONENT,
+    LEFT_PARENS,
+    RIGHT_PARENS,
 };
 
-enum class OperatorType {
-    NONE,
-    UNARY,
-    BINARY,
-    EITHER,
+enum class Associativity {
+    LEFT,
+    RIGHT,
 };
 
 class Token {
@@ -31,23 +31,25 @@ public:
     static const Token MULTIPLY;
     static const Token DIVIDE;
     static const Token EXPONENT;
+    static const Token LEFT_PARENS;
+    static const Token RIGHT_PARENS;
 
     friend bool operator==(const Token& left, const Token& right);
     friend bool operator!=(const Token& left, const Token& right);
     friend std::ostream& operator<<(std::ostream& out, const Token& token);
 
 public:
-    Token(TokenType type, const std::string& symbol, unsigned precedence);
+    Token(TokenType type, const std::string& symbol, unsigned precedence, Associativity associativity = Associativity::LEFT);
 
     static const std::vector<Token>& checkable_tokens();
 
     // Getters
     TokenType type() const;
-    OperatorType operator_type() const;
     const std::string& name() const;
     const std::string& symbol() const;
     double value() const;
     unsigned precedence() const;
+    bool is_left_associative() const;
 
     // Setters
     void set_value(double value);
@@ -57,6 +59,7 @@ private:
     const std::string symbol_;
     double value_;
     const unsigned precedence_;
+    const Associativity associativity_;
 };
 
 #endif // TOKEN_H_
