@@ -2,6 +2,7 @@
 
 #include "tokenizer_exception.h"
 
+#include <iomanip>
 #include <unordered_map>
 
 const Token Token::ADD{TokenType::ADD, "+", 10};
@@ -103,4 +104,18 @@ bool operator==(const Token& left, const Token& right)
 bool operator!=(const Token& left, const Token& right)
 {
     return !(left == right);
+}
+
+std::ostream& operator<<(std::ostream& out, const Token& token)
+{
+    out << token.name() << " ";
+
+    if (token.type_ == TokenType::NUMBER) {
+        out << std::setprecision(12) << token.value_;
+    }
+    else {
+        out << token.symbol();
+    }
+
+    return out;
 }

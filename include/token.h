@@ -1,6 +1,7 @@
 #ifndef TOKEN_H_
 #define TOKEN_H_
 
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -33,6 +34,7 @@ public:
 
     friend bool operator==(const Token& left, const Token& right);
     friend bool operator!=(const Token& left, const Token& right);
+    friend std::ostream& operator<<(std::ostream& out, const Token& token);
 
 public:
     Token(TokenType type, const std::string& symbol, unsigned precedence);
