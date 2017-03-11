@@ -51,9 +51,9 @@ int main(int argc, char** argv)
         ss << argv[idx] << " ";
     }
 
-    Parser parser{ss.str()};
-
     try {
+        Parser parser{ss.str()};
+
         value_t result = parser.evaluate();
         static constexpr auto max_precision = std::numeric_limits<value_t>::digits10 + 1;
 
