@@ -55,6 +55,9 @@ public:
     Token(TokenType type, const std::string& symbol, unsigned precedence,
           Associativity associativity = Associativity::LEFT, value_t value = 0.0L);
 
+    Token(const Token&) = default;
+    Token& operator=(const Token&) = default;
+
     static const std::vector<Token>& checkable_tokens();
 
     // Getters
@@ -70,10 +73,10 @@ public:
 
 private:
     TokenType type_;
-    const std::string symbol_;
+    std::string symbol_;
     value_t value_;
-    const unsigned precedence_;
-    const Associativity associativity_;
+    unsigned precedence_;
+    Associativity associativity_;
 };
 
 #endif // TOKEN_H_
