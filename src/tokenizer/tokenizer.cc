@@ -85,15 +85,12 @@ Tokenizer::Tokenizer(const std::string& input)
     // followed by an operator to allow implicit multiplication
     for (std::size_t idx = 0; idx < tokens_.size() - 1; ++idx) {
         // Look forward one
-        if (// Case 1, next char is left parens, current char is right parens or number
-            (tokens_[idx].type() == TokenType::RIGHT_PARENS
-             || tokens_[idx].type() == TokenType::NUMBER)
-            && tokens_[idx + 1].type() == TokenType::LEFT_PARENS ||
-            // Case 2, next char is number, current char is right parens
-            tokens_[idx].type() == TokenType::RIGHT_PARENS &&
-            tokens_[idx + 1].type() == TokenType::NUMBER) {
+        const auto& current = tokens_[idx];
+        const auto& next = tokens_[idx + 1];
+        if ((current.type() == TokenType::RIGHT_PARENS && !next.is_operator()) ||
+            (next.type() == TokenType::LEFT_PARENS && !current.is_operator())) {
             tokens_.insert(tokens_.begin() + idx + 1, Token::MULTIPLY);
-            idx += 2;
+            ++idx;
         }
     }
 }
