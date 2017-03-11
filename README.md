@@ -1,5 +1,7 @@
 # zcalc
 
+**WORK IN-PROGRESS**, incomplete
+
 A simple calculator to practice using CMake and parsing/handling input.
 
 ## Instructions
