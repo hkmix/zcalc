@@ -108,34 +108,26 @@ value_t Parser::evaluate() const
             break;
 
         case TokenType::ADD:
-            // If we have two on the stack, add them, else assume unary and do nothing
-            if (values.size() == 0) {
-                throw EvaluationException{EvaluationException::NOT_ENOUGH_NUMBERS};
-            }
-            else if (values.size() >= 2) {
+            if (values.size() >= 2) {
                 auto pair = top_two(values);
                 values.push(pair.first + pair.second);
+            }
+            else {
+                throw EvaluationException{EvaluationException::NOT_ENOUGH_NUMBERS};
             }
             break;
 
         case TokenType::SUBTRACT:
-            // If we have two on the stack, subtract them, else assume unary and negate
-            if (values.size() == 0) {
-                throw EvaluationException{EvaluationException::NOT_ENOUGH_NUMBERS};
-            }
-            else if (values.size() == 1) {
-                const auto& top = values.top();
-                values.pop();
-                values.push(-top);
-            }
-            else if (values.size() >= 2) {
+            if (values.size() >= 2) {
                 auto pair = top_two(values);
                 values.push(pair.first - pair.second);
+            }
+            else {
+                throw EvaluationException{EvaluationException::NOT_ENOUGH_NUMBERS};
             }
             break;
 
         case TokenType::MULTIPLY:
-            // If we have two on the stack, multiply them
             if (values.size() >= 2) {
                 auto pair = top_two(values);
                 values.push(pair.first * pair.second);
@@ -146,7 +138,6 @@ value_t Parser::evaluate() const
             break;
 
         case TokenType::DIVIDE:
-            // If we have two on the stack, divide them
             if (values.size() >= 2) {
                 auto pair = top_two(values);
 
@@ -162,7 +153,6 @@ value_t Parser::evaluate() const
             break;
 
         case TokenType::EXPONENT:
-            // If we have two on the stack, take the exponentiation
             if (values.size() >= 2) {
                 auto pair = top_two(values);
                 try {
@@ -171,6 +161,17 @@ value_t Parser::evaluate() const
                     // HACK: Horrible practice catching this way
                     throw EvaluationException{EvaluationException::INVALID_EXPONENTIATION};
                 }
+            }
+            else {
+                throw EvaluationException{EvaluationException::NOT_ENOUGH_NUMBERS};
+            }
+            break;
+
+        case TokenType::NEGATE:
+            if (values.size() >= 1) {
+                const auto top = values.top();
+                values.pop();
+                values.push(-top);
             }
             else {
                 throw EvaluationException{EvaluationException::NOT_ENOUGH_NUMBERS};

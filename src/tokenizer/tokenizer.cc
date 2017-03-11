@@ -62,6 +62,25 @@ Tokenizer::Tokenizer(const std::string& input)
         }
     }
 
+    // PASS 1: Negation
+    for (std::size_t idx = 0; idx < tokens_.size() - 1; ++idx) {
+        if (tokens_[idx].type() != TokenType::SUBTRACT) {
+            continue;
+        }
+
+        if (idx == 0) {
+            tokens_[idx] = Token::NEGATE;
+            continue;
+        }
+
+        const auto& previous = tokens_[idx - 1];
+        if (previous.is_operator() || previous.type() == TokenType::LEFT_PARENS) {
+            tokens_[idx] = Token::NEGATE;
+            continue;
+        }
+    }
+
+    // PASS 2: Bracketed multiplication
     // When done, add a multiplication sign whenever we have braces not
     // followed by an operator to allow implicit multiplication
     for (std::size_t idx = 0; idx < tokens_.size() - 1; ++idx) {

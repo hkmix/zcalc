@@ -13,6 +13,8 @@ const Token Token::MULTIPLY{TokenType::MULTIPLY, "*", 15, Associativity::LEFT};
 const Token Token::DIVIDE{TokenType::DIVIDE, "/", 15, Associativity::LEFT};
 const Token Token::EXPONENT{TokenType::EXPONENT, "^", 20, Associativity::RIGHT};
 
+const Token Token::NEGATE{TokenType::NEGATE, "-", 17, Associativity::LEFT};
+
 const Token Token::LEFT_PARENS{TokenType::LEFT_PARENS, "(", Token::NULL_PRECEDENCE};
 const Token Token::RIGHT_PARENS{TokenType::RIGHT_PARENS, ")", Token::NULL_PRECEDENCE};
 
@@ -68,6 +70,7 @@ const std::string& Token::name() const
         {TokenType::MULTIPLY, "MULTIPLY"},
         {TokenType::DIVIDE, "DIVIDE"},
         {TokenType::EXPONENT, "EXPONENT"},
+        {TokenType::NEGATE, "NEGATE"},
         {TokenType::LEFT_PARENS, "LEFT_PARENS"},
         {TokenType::RIGHT_PARENS, "RIGHT_PARENS"},
     };
@@ -92,6 +95,11 @@ unsigned Token::precedence() const
 bool Token::is_left_associative() const
 {
     return associativity_ == Associativity::LEFT;
+}
+
+bool Token::is_operator() const
+{
+    return associativity_ != Associativity::NONE;
 }
 
 void Token::set_value(value_t value)

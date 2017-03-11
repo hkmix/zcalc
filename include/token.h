@@ -8,7 +8,7 @@
 
 using value_t = long double;
 using int_value_t = long long;
-using uint_value_t = long long unsigned;
+using uint_value_t = unsigned long long;
 
 enum class TokenType {
     NUMBER,
@@ -17,6 +17,7 @@ enum class TokenType {
     MULTIPLY,
     DIVIDE,
     EXPONENT,
+    NEGATE,
     LEFT_PARENS,
     RIGHT_PARENS,
 };
@@ -44,6 +45,7 @@ public:
     static const Token MULTIPLY;
     static const Token DIVIDE;
     static const Token EXPONENT;
+    static const Token NEGATE;
     static const Token LEFT_PARENS;
     static const Token RIGHT_PARENS;
 
@@ -53,7 +55,7 @@ public:
 
 public:
     Token(TokenType type, const std::string& symbol, unsigned precedence,
-          Associativity associativity = Associativity::LEFT, value_t value = 0.0L);
+          Associativity associativity = Associativity::NONE, value_t value = 0.0L);
 
     Token(const Token&) = default;
     Token& operator=(const Token&) = default;
@@ -67,6 +69,7 @@ public:
     value_t value() const;
     unsigned precedence() const;
     bool is_left_associative() const;
+    bool is_operator() const;
 
     // Setters
     void set_value(value_t value);
