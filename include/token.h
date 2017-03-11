@@ -23,7 +23,7 @@ enum class OperatorType {
 
 class Token {
 public:
-    static constexpr unsigned NULL_PRECEDENCE = -1;
+    static constexpr unsigned NULL_PRECEDENCE = 0;
 
     // Operators
     static const Token ADD;
