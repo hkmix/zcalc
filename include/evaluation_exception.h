@@ -12,7 +12,6 @@ public:
     static const std::string INVALID_EXPONENTIATION;
     static const std::string MISMATCHED_PARENS;
     static const std::string NOT_ENOUGH_NUMBERS;
-    static const std::string TOO_MANY_NUMBERS;
     static const std::string UNIMPLEMENTED;
 
 public:

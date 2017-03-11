@@ -183,9 +183,16 @@ double Parser::evaluate() const
         }
     }
 
-    // At the end, should only have one value left
-    if (values.size() != 1) {
-        throw EvaluationException{EvaluationException::TOO_MANY_NUMBERS};
+    // At the end, if there is more than one number, assume they are to be
+    // multiplied to enable bracketed multiplications
+    while (values.size() > 1) {
+        const auto pair = top_two(values);
+        values.push(pair.first * pair.second);
+    }
+
+    // Sanity check; should never reach here
+    if (values.empty()) {
+        throw EvaluationException{EvaluationException::NOT_ENOUGH_NUMBERS};
     }
 
     return values.top();

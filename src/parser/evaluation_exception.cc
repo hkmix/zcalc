@@ -7,7 +7,6 @@ const std::string EvaluationException::DIVIDE_BY_ZERO{"Divide by zero."};
 const std::string EvaluationException::INVALID_EXPONENTIATION{"Invalid exponentiation."};
 const std::string EvaluationException::MISMATCHED_PARENS{"Mismatched parentheses."};
 const std::string EvaluationException::NOT_ENOUGH_NUMBERS{"Not enough numbers given."};
-const std::string EvaluationException::TOO_MANY_NUMBERS{"Too many numbers given."};
 const std::string EvaluationException::UNIMPLEMENTED{"Unimplemented call used."};
 
 EvaluationException::EvaluationException()
