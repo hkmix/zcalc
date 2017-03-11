@@ -52,10 +52,6 @@ void Tokenizer::tokenize(const std::string& input)
         }
 
         if (best_token != nullptr) {
-            std::cout << "found " << best_token->symbol() << "\n";
-        }
-
-        if (best_token != nullptr) {
             // Symbol was identified, add it
             tokens_.push_back(*best_token);
             idx += best_token->symbol().size();
