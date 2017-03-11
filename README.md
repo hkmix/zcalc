@@ -6,7 +6,7 @@ A simple calculator to practice using CMake and parsing/handling input.
 
 ## Available operations
 
-- Add, subtract, multiply, divide
+- Add, subtract/negation, multiply, divide
 - Exponentiation
 - Parentheses
 
@@ -25,4 +25,4 @@ A simple calculator to practice using CMake and parsing/handling input.
 1. Execute
 
         /build $ cd ../bin
-        /bin $ ./zcalc
+        /bin $ ./zcalc "some expression here"
