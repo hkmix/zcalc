@@ -1,9 +1,14 @@
 #ifndef TOKEN_H_
 #define TOKEN_H_
 
+#include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
+
+using value_t = long double;
+using int_value_t = long long;
+using uint_value_t = long long unsigned;
 
 enum class TokenType {
     NUMBER,
@@ -17,6 +22,7 @@ enum class TokenType {
 };
 
 enum class Associativity {
+    NONE,
     LEFT,
     RIGHT,
 };
@@ -24,6 +30,13 @@ enum class Associativity {
 class Token {
 public:
     static constexpr unsigned NULL_PRECEDENCE = 0;
+
+    // Constants
+    static const Token PI;
+    static const Token NATURAL_E;
+
+    static constexpr value_t PI_VAL = 3.141592653589793238462643383279502884L;
+    static constexpr value_t E_VAL = 2.718281828459045235360287471352662498L;
 
     // Operators
     static const Token ADD;
@@ -39,7 +52,8 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const Token& token);
 
 public:
-    Token(TokenType type, const std::string& symbol, unsigned precedence, Associativity associativity = Associativity::LEFT);
+    Token(TokenType type, const std::string& symbol, unsigned precedence,
+          Associativity associativity = Associativity::LEFT, value_t value = 0.0L);
 
     static const std::vector<Token>& checkable_tokens();
 
@@ -47,17 +61,17 @@ public:
     TokenType type() const;
     const std::string& name() const;
     const std::string& symbol() const;
-    double value() const;
+    value_t value() const;
     unsigned precedence() const;
     bool is_left_associative() const;
 
     // Setters
-    void set_value(double value);
+    void set_value(value_t value);
 
 private:
     TokenType type_;
     const std::string symbol_;
-    double value_;
+    value_t value_;
     const unsigned precedence_;
     const Associativity associativity_;
 };

@@ -2,6 +2,7 @@
 
 #include "tokenizer_exception.h"
 
+#include <cmath>
 #include <iomanip>
 #include <limits>
 #include <unordered_map>
@@ -15,10 +16,14 @@ const Token Token::EXPONENT{TokenType::EXPONENT, "**", 20, Associativity::RIGHT}
 const Token Token::LEFT_PARENS{TokenType::LEFT_PARENS, "(", Token::NULL_PRECEDENCE};
 const Token Token::RIGHT_PARENS{TokenType::RIGHT_PARENS, ")", Token::NULL_PRECEDENCE};
 
-Token::Token(TokenType type, const std::string& symbol, unsigned precedence, Associativity associativity)
+const Token Token::PI{TokenType::NUMBER, "pi", Token::NULL_PRECEDENCE, Associativity::NONE, Token::PI_VAL};
+const Token Token::NATURAL_E{TokenType::NUMBER, "e", Token::NULL_PRECEDENCE, Associativity::NONE, Token::E_VAL};
+
+Token::Token(TokenType type, const std::string& symbol, unsigned precedence,
+             Associativity associativity, value_t value)
     : type_{type}
     , symbol_{symbol}
-    , value_{0}
+    , value_{value}
     , precedence_{precedence}
     , associativity_{associativity}
 {
@@ -27,6 +32,7 @@ Token::Token(TokenType type, const std::string& symbol, unsigned precedence, Ass
 const std::vector<Token>& Token::checkable_tokens()
 {
     static std::vector<Token> tokens{
+        // Operators
         Token::ADD,
         Token::SUBTRACT,
         Token::MULTIPLY,
@@ -34,6 +40,10 @@ const std::vector<Token>& Token::checkable_tokens()
         Token::EXPONENT,
         Token::LEFT_PARENS,
         Token::RIGHT_PARENS,
+
+        // Constants
+        Token::PI,
+        Token::NATURAL_E,
     };
 
     return tokens;
@@ -69,7 +79,7 @@ const std::string& Token::name() const
     throw TokenizerException{TokenizerException::UNEXPECTED_TOKEN, 0};
 }
 
-double Token::value() const
+value_t Token::value() const
 {
     return value_;
 }
@@ -84,7 +94,7 @@ bool Token::is_left_associative() const
     return associativity_ == Associativity::LEFT;
 }
 
-void Token::set_value(double value)
+void Token::set_value(value_t value)
 {
     value_ = value;
 }
@@ -109,7 +119,7 @@ std::ostream& operator<<(std::ostream& out, const Token& token)
 
     if (token.type_ == TokenType::NUMBER) {
         // Use maximum possible precision
-        out << std::setprecision(std::numeric_limits<double>::digits10 + 1) << token.value_;
+        out << std::setprecision(std::numeric_limits<value_t>::digits10 + 1) << token.value_;
     }
     else {
         out << token.symbol();

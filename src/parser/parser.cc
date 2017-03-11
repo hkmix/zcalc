@@ -11,7 +11,7 @@
 namespace
 {
 
-std::pair<double, double> top_two(std::stack<double>& stack)
+std::pair<value_t, value_t> top_two(std::stack<value_t>& stack)
 {
     // Element on the right is on the top of the stack
     const auto& right = stack.top();
@@ -96,9 +96,9 @@ Parser::Parser(const std::string& input)
     }
 }
 
-double Parser::evaluate() const
+value_t Parser::evaluate() const
 {
-    std::stack<double> values;
+    std::stack<value_t> values;
 
     for (const auto& token : parsed_tokens_) {
         switch (token.type()) {

@@ -4,6 +4,12 @@
 
 A simple calculator to practice using CMake and parsing/handling input.
 
+## Available operations
+
+- Add, subtract, multiply, divide
+- Exponentiation
+- Parentheses
+
 ## Instructions
 
 1. Create subdirectories

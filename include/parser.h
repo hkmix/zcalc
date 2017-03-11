@@ -12,7 +12,7 @@ public:
 public:
     explicit Parser(const std::string& input);
 
-    double evaluate() const;
+    value_t evaluate() const;
 
 private:
     std::vector<Token> parsed_tokens_;

@@ -73,7 +73,7 @@ std::size_t Tokenizer::read_number(const std::string& input, std::size_t idx)
     // Valid number format:
     // [0-9]*(\.[0-9]*)? with underscores as separators
     std::size_t end_idx = idx;
-    double value = 0;
+    value_t value = 0;
 
     // Read value until period
     while (idx_valid(input, end_idx) && is_digit(input[end_idx])) {
