@@ -26,14 +26,13 @@ std::pair<value_t, value_t> top_two(std::stack<value_t>& stack)
 } // namespace
 
 Parser::Parser(const std::string& input)
+    : tokenizer_{input}
 {
-    Tokenizer tokenizer{input};
-
     parsed_tokens_.clear();
 
     // Shunting-yard algorithm
     std::stack<Token> operators;
-    for (const auto& token : tokenizer.tokens()) {
+    for (const auto& token : tokenizer_.tokens()) {
         if (token.type() == TokenType::NUMBER) {
             parsed_tokens_.push_back(token);
         }
@@ -194,6 +193,8 @@ value_t Parser::evaluate() const
 
 std::ostream& operator<<(std::ostream& out, const Parser& parser)
 {
+    out << parser.tokenizer_ << "\n";
+
     out << "Parser: total " << parser.parsed_tokens_.size() << " tokens\n";
     for (const auto& token : parser.parsed_tokens_) {
         out << "  " << token << "\n";

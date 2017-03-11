@@ -41,18 +41,37 @@ int main(int argc, char** argv)
 {
     const std::string exec_name = std::string{argv[0]};
     if (argc < 2) {
-        std::cout << "Usage: " << exec_name << " <expression>\n";
+        std::cout << "Usage: " << exec_name << " [-v|--verbose] \"expression\"\n";
 
         return 0;
     }
 
+    bool verbose = false;
+
+    // Check for arguments
+    int idx = 1;
+    while (idx < argc) {
+        std::string flag{argv[idx]};
+        if (flag == "-v" || flag == "--verbose") {
+            verbose = true;
+            ++idx;
+        }
+        else {
+            break;
+        }
+    }
+
     std::stringstream ss;
-    for (auto idx = 1; idx < argc; ++idx) {
+    for (; idx < argc; ++idx) {
         ss << argv[idx] << " ";
     }
 
     try {
         Parser parser{ss.str()};
+
+        if (verbose) {
+            std::cout << parser << "\n";
+        }
 
         value_t result = parser.evaluate();
         static constexpr auto max_precision = std::numeric_limits<value_t>::digits10 + 1;

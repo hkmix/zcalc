@@ -2,6 +2,7 @@
 #define PARSER_H_
 
 #include "token.h"
+#include "tokenizer.h"
 
 #include <vector>
 
@@ -15,6 +16,7 @@ public:
     value_t evaluate() const;
 
 private:
+    Tokenizer tokenizer_;
     std::vector<Token> parsed_tokens_;
 };
 
