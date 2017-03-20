@@ -1,9 +1,14 @@
-cmake_minimum_required(VERSION 3.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.6)
 
-project(zcalc)
+PROJECT(zcalc)
 
-set(CMAKE_CXX_STANDARD 14)
-set(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin")
+SET(CMAKE_CXX_STANDARD 14)
 
-include_directories(include)
-add_subdirectory(src)
+IF(NOT MSVC)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Werror")
+ENDIF()
+
+SET(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin")
+
+INCLUDE_DIRECTORIES(include)
+ADD_SUBDIRECTORY(src)
